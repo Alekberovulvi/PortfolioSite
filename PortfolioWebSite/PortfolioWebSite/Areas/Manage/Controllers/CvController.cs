@@ -42,7 +42,7 @@ namespace PortfolioWebSite.Areas.Manage.Controllers
         {
             if (file == null || file.Length == 0) 
             {
-                ModelState.AddModelError("file", "Please select a file.");
+                ModelState.AddModelError(string.Empty, "Please select a file.");
                 return View();
             }
 
@@ -50,7 +50,7 @@ namespace PortfolioWebSite.Areas.Manage.Controllers
             var fileExtension = Path.GetExtension(file.FileName);
             if (!allowedExtensions.Contains(fileExtension))
             {
-                ModelState.AddModelError("file", "Invalid file format. Only PDF, DOC, and DOCX files are allowed.");
+                ModelState.AddModelError(string.Empty, "Invalid file format. Only PDF, DOC, and DOCX files are allowed.");
                 return View();
             }
 

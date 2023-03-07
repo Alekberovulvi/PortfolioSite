@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using PortfolioWebSite.DAL;
 using PortfolioWebSite.Models;
@@ -22,8 +24,7 @@ namespace PortfolioWebSite.Areas.Manage.Controllers
         {
             HomeVM home = new HomeVM
             {
-                About = await _context.Abouts.FirstOrDefaultAsync(),
-                Cvs = await _context.Cvs.FirstOrDefaultAsync()
+                About = await _context.Abouts.FirstOrDefaultAsync()
             };
             return View(home);
         }
@@ -36,12 +37,36 @@ namespace PortfolioWebSite.Areas.Manage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(About about)
+
+        public IActionResult Create([Bind("Id,Title,Description,Name")] About about, IFormFile imgFile)
         {
-            _context.Add(about);
-                await _context.SaveChangesAsync();
-            
-                return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                if (imgFile != null && imgFile.ContentType.ToLower().StartsWith("image/") &&
+                    (imgFile.FileName.EndsWith(".jpg") || imgFile.FileName.EndsWith(".jpeg")))
+                {
+                    string uploadsFolder = Path.Combine(_env.WebRootPath, "assets", "img");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + imgFile.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        imgFile.CopyTo(fileStream);
+                    }
+
+                    about.Img = uniqueFileName;
+
+                    _context.Add(about);
+                    _context.SaveChanges();
+
+                }
+                else
+                {
+                    ModelState.AddModelError("imgFile", "Please choose a JPEG image file");
+                }
+            }
+
+                    return RedirectToAction(nameof(Index));
 
         }
 
@@ -49,19 +74,68 @@ namespace PortfolioWebSite.Areas.Manage.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var x = await _context.Abouts.FindAsync(id);
+
+            if (x == null)
+            {
+                return NotFound();
+            }
+
             return View(x);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(About about)
+        public async Task<IActionResult> Update(int id ,About about, IFormFile file)
         {
-            var existing = await _context.Abouts.FindAsync(about.Id);
-            existing.Title = about.Title;
-            existing.Description = about.Description;
-            existing.Name = about.Name;
-            existing.Img= about.Img;
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            if (id != about.Id) 
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                if (file != null && file.Length > 0) 
+                {
+                    var allowedExtensions = new[] { ".jpg", ".jpeg" };
+                    var extension = Path.GetExtension(file.FileName);
+
+                    if (!allowedExtensions.Contains(extension.ToLower()))
+                    {
+                        ModelState.AddModelError(string.Empty, "Only jpg/jpeg format is allowed.");
+                        return View(about);
+                    }
+                    var fileName = Path.GetFileNameWithoutExtension(file.FileName) + extension;
+                    var filePath = Path.Combine(_env.WebRootPath, "wwwroot/assets/img", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    var oldFilePath = Path.Combine(_env.WebRootPath, "wwwroot/assets/img", about.Img);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                    about.Img = fileName;
+                }
+                try
+                {
+                    _context.Update(about);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Abouts.Any(e=>e.Id==id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(about);
         }
 
         public async Task<IActionResult> Delete(int id)
