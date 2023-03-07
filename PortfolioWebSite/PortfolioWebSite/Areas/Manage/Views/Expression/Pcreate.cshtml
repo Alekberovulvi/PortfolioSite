@@ -1,0 +1,31 @@
+﻿@model PortfolioWebSite.Models.TestimonialsEdit
+
+@{
+    ViewData["Title"] = "Pcreate";
+    Layout = "~/Areas/Manage/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Pcreate</h1>
+
+<br />
+
+<form class="form-group" method="post">
+    @Html.LabelFor(x=>x.Img)
+    @Html.TextBoxFor(x=>x.Img, new {@class ="form-control"})
+    <input type="file" name="userfiles" />
+    <br />
+    @Html.LabelFor(x=>x.Name)
+    @Html.TextBoxFor(x=>x.Name, new {@class ="form-control"})
+    <br />
+    @Html.LabelFor(x=>x.Title)
+    @Html.TextBoxFor(x=>x.Title, new {@class ="form-control"})
+    <br />
+    @Html.LabelFor(x=>x.Icon)
+    @Html.TextBoxFor(x=>x.Icon, new {@class ="form-control"})
+    <br />
+    @Html.LabelFor(x=>x.Description)
+    @Html.TextBoxFor(x=>x.Description, new {@class ="form-control"})
+    <br />
+    <button class="btn btn-primary">Create</button>
+    <a class="btn btn-warning" asp-action="Index" asp-controller="Expression">Cancel</a>
+</form>
