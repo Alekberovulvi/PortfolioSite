@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "EA/I1wslica2xHZ/PwgosI4R/7dEsPX/GPk6dvjE6jg=",
+  "Hash": "z8lnRw+RVqbn8NhPuC4fi8XNdoHnYKAF2yTSRuqhNyE=",
   "Source": "PortfolioWebSite",
   "BasePath": "_content/PortfolioWebSite",
   "Mode": "Default",
@@ -66,40 +66,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\css\\style.css"
-    },
-    {
-      "Identity": "C:\\Users\\Alekberovv\\Desktop\\Back END\\PortfolioWebSite\\PortfolioWebSite\\wwwroot\\assets\\cv\\IMG-20210409-WA0031_20230307140746621.jpg",
-      "SourceId": "PortfolioWebSite",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alekberovv\\Desktop\\Back END\\PortfolioWebSite\\PortfolioWebSite\\wwwroot\\",
-      "BasePath": "_content/PortfolioWebSite",
-      "RelativePath": "assets/cv/IMG-20210409-WA0031_20230307140746621.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\cv\\IMG-20210409-WA0031_20230307140746621.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\Alekberovv\\Desktop\\Back END\\PortfolioWebSite\\PortfolioWebSite\\wwwroot\\assets\\cv\\Ulvi Alekberov (1)_20230307140759869.pdf",
-      "SourceId": "PortfolioWebSite",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Alekberovv\\Desktop\\Back END\\PortfolioWebSite\\PortfolioWebSite\\wwwroot\\",
-      "BasePath": "_content/PortfolioWebSite",
-      "RelativePath": "assets/cv/Ulvi Alekberov (1)_20230307140759869.pdf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\assets\\cv\\Ulvi Alekberov (1)_20230307140759869.pdf"
     },
     {
       "Identity": "C:\\Users\\Alekberovv\\Desktop\\Back END\\PortfolioWebSite\\PortfolioWebSite\\wwwroot\\assets\\cv\\Ulvi Alekberov.pdf",
